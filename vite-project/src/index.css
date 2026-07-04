@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --bg-deep-1: #100c2a;
+  --bg-deep-2: #2a1e5c;
+  --bg-deep-3: #1b1440;
+  --glass-fill: rgba(255, 255, 255, 0.08);
+  --glass-fill-strong: rgba(255, 255, 255, 0.14);
+  --glass-border: rgba(255, 255, 255, 0.22);
+  --accent-violet: #8b6bff;
+  --accent-cyan: #5ef1e0;
+  --accent-pink: #ff6ec7;
+  --text-primary: #f4f2ff;
+  --text-muted: rgba(244, 242, 255, 0.62);
+  --danger: #ff6b81;
+  --success: #5ef1c4;
+}
+
+/* ---------- Page backdrop ---------- */
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: radial-gradient(circle at 20% 20%, var(--bg-deep-2), transparent 45%),
+              radial-gradient(circle at 80% 0%, #3a2a7a, transparent 40%),
+              radial-gradient(circle at 50% 100%, #1c2a5e, transparent 50%),
+              linear-gradient(160deg, var(--bg-deep-1), var(--bg-deep-3));
+  background-attachment: fixed;
+  color: var(--text-primary);
+}
+
+/* Ambient floating glow orbs behind the card — the signature element */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+  animation: drift 14s ease-in-out infinite alternate;
+}
+body::before {
+  width: 380px;
+  height: 380px;
+  top: -80px;
+  left: -100px;
+  background: var(--accent-violet);
+}
+body::after {
+  width: 320px;
+  height: 320px;
+  bottom: -100px;
+  right: -80px;
+  background: var(--accent-cyan);
+  animation-delay: 3s;
+}
+
+@keyframes drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(30px, 40px) scale(1.08); }
+}
+
+/* ---------- Glass card ---------- */
+.todo-list {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 6vh auto;
+  padding: 32px 28px 28px;
+  border-radius: 24px;
+
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.37),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+
+.todo-list h1 {
+  margin: 0 0 24px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 1.9rem;
+  letter-spacing: -0.02em;
+  text-align: center;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet) 60%, var(--accent-pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Input row ---------- */
+.todo-list > div:first-of-type {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.todo-list input[type="text"] {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.todo-list input[type="text"]::placeholder {
+  color: var(--text-muted);
+}
+
+.todo-list input[type="text"]:focus {
+  border-color: var(--accent-cyan);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(94, 241, 224, 0.18);
+}
+
+/* ---------- Buttons (shared base) ---------- */
+.todo-list button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--text-primary);
+  background: var(--glass-fill);
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.todo-list button:hover {
+  transform: translateY(-1px);
+  background: var(--glass-fill-strong);
+}
+
+.todo-list button:active {
+  transform: translateY(0);
+}
+
+.todo-list button:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+}
+
+.add-button {
+  padding: 0 22px;
+  background: linear-gradient(135deg, var(--accent-violet), var(--accent-pink));
+  border: none;
+  box-shadow: 0 4px 18px rgba(139, 107, 255, 0.45);
+}
+
+.add-button:hover {
+  box-shadow: 0 6px 22px rgba(139, 107, 255, 0.6);
+  filter: brightness(1.08);
+}
+
+/* ---------- List ---------- */
+.todo-list ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.todo-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.todo-list li:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.task-text {
+  flex: 1;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+/* ---------- Action buttons ---------- */
+.delete-button,
+.move-up-button,
+.move-down-button {
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.delete-button {
+  color: var(--danger);
+  border-color: rgba(255, 107, 129, 0.35);
+}
+
+.delete-button:hover {
+  background: rgba(255, 107, 129, 0.16);
+  border-color: var(--danger);
+}
+
+.move-up-button:hover,
+.move-down-button:hover {
+  border-color: var(--accent-cyan);
+  background: rgba(94, 241, 224, 0.14);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 520px) {
+  .todo-list {
+    margin: 4vh 16px;
+    padding: 26px 18px 22px;
+    border-radius: 20px;
+  }
+
+  .todo-list h1 {
+    font-size: 1.6rem;
+  }
+
+  .delete-button,
+  .move-up-button,
+  .move-down-button {
+    padding: 6px 8px;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after {
+    animation: none;
+  }
+
+  .todo-list button {
+    transition: none;
+  }
+}
