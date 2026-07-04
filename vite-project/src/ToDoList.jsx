@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import './ToDoList.css';
-
 function ToDoList() {
     const [tasks, setTasks] = useState([
         { id: 1, text: "Task 1", completed: false, dueDate: '', dueTime: '' },
